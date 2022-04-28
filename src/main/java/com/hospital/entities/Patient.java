@@ -27,9 +27,12 @@ public class Patient implements Serializable {
     @Column(name = "SURNAME")
     private String surname;
 
-    @ManyToMany(mappedBy = "illnessPatients")
+    @ManyToMany
+    @JoinTable(
+            name = "illness_patient",
+            joinColumns = @JoinColumn(name = "patient_ID",referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "illness_id",referencedColumnName = "ID"))
     List<Illness> patientIllnesses;
-
     @ManyToOne
     @JoinColumn(name = "HOSPITAL_ID")
     private Hospital hospital;
@@ -39,11 +42,13 @@ public class Patient implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Patient patient = (Patient) o;
-        return Objects.equals(id, patient.id);
+        return id != null && Objects.equals(id, patient.id)
+                && Objects.equals(name, patient.name)
+                && Objects.equals(surname, patient.surname);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(id,name,surname);
     }
 }

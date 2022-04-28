@@ -29,24 +29,19 @@ public class Illness implements Serializable {
     @Column(name = "TYPE")
     private String type;
 
-    @ManyToMany
-    @JoinTable(
-            name = "patient_illness",
-            joinColumns = @JoinColumn(name = "patient_id",referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "illness_id",referencedColumnName = "id"))
-    List<Patient> illnessPatients;
-
+    @ManyToMany(mappedBy = "patientIllnesses")
+    List<Patient> patientIllnesses;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Illness illness = (Illness) o;
-        return Objects.equals(id, illness.id);
+        return id != null && Objects.equals(id, illness.id) && Objects.equals(type, illness.type);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(id, type);
     }
 }

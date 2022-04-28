@@ -20,38 +20,42 @@
             <th>Last name</th>
             <th>Illnesses</th>
         </tr>
+        <tbody>
         <ui:repeat value="#{patientsForHospital.hospital.patients}" var="patient">
             <tr>
                 <th>#{patient.id}</th>
                 <td>#{patient.name}</td>
                 <td>#{patient.surname}</td>
-
+                <td>
                     <ui:repeat value="#{patient.patientIllnesses}" var="illness">
-                        <td>
                         #{illness.type}
-                        </td>
                     </ui:repeat>
-
+                </td>
             </tr>
         </ui:repeat>
+        </tbody>
     </table>
+
     <h:form>
-        <h:inputText value="#{patientsForHospital.patientToCreate.name}" required="true" />
-        <h:inputText value="#{patientsForHospital.patientToCreate.surname}" required="true" />
+        <h3>First name</h3>
+        <h:inputText class="form-control" value="#{patientsForHospital.patientToCreate.name}" required="true" />
+        <h3>Last name</h3>
+        <h:inputText class="form-control" value="#{patientsForHospital.patientToCreate.surname}" required="true" />
+        <h3>Illnesses</h3>
+        <br/>
         <h:selectManyCheckbox value="#{patientsForHospital.patientToCreate.patientIllnesses}" required="true">
             <f:selectItems value="#{illnesses.allIllnesses}"
                            var="illness"
                            itemLabel="#{illness.type}"
                            itemValue="#{illness}"/>
         </h:selectManyCheckbox>
-
         <h:commandButton value="Add new patient"
                          actionListener="#{patientsForHospital.createPatient}"
                          action="#{'patients?faces-redirect=true&amp;hospitalId='.concat(patientsForHospital.hospital.id)}">
             <f:param name="hospitalId" value="#{patientsForHospital.hospital.id}" />
         </h:commandButton>
     </h:form>
-    <h:link value="Back to index" outcome="/index"/>
+        <h:link value="Back to home" outcome="/index"/>
 </h:body>
 </html>
 

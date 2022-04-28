@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +34,12 @@ public class Hospital implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Hospital hospital = (Hospital) o;
-        return Objects.equals(id, hospital.id);
+        return id != null && Objects.equals(id, hospital.id)
+                && Objects.equals(name, hospital.name);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(id, name);
     }
 }

@@ -17,7 +17,9 @@
             <tr>
                 <th>#{hospital.id}</th>
                 <td>#{hospital.name}</td>
-                <h:link value="Show more" outcome="patients?hospitalId=#{hospital.id}"/>
+                <td>
+                    <h:link value="Show more" outcome="patients?hospitalId=#{hospital.id}"/>
+                </td>
             </tr>
         </ui:repeat>
     </table>
@@ -25,6 +27,6 @@
         <h:inputText value="#{hospitals.hospitalToCreate.name}" required="true" />
         <h:commandButton value="Add new hospital" actionListener="#{hospitals.createHospital}" action="index?faces-redirect=true"/>
     </h:form>
-    <h:link value="Back to index" outcome="/index"/>
+    <h:link value="Back to home" outcome="/index"/>
 </h:body>
 </html>
