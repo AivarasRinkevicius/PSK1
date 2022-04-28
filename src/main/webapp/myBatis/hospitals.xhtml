@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+>
+<style>
+    table, th, td {
+        border:1px solid black;
+    }
+</style>
+<h:head/>
+<h:body>
+    <h1>Hospitals:</h1>
+    <table>
+            <ui:repeat value="#{hospitalsMyBatis.allHospitals}" var="hospital">
+                <tr>
+                    <th>#{hospital.id}</th>
+                    <td>#{hospital.name}</td>
+                </tr>
+            </ui:repeat>
+    </table>
+    <h:form>
+        <h:inputText value="#{hospitalsMyBatis.hospitalToCreate.name}" required="true" />
+        <h:commandButton value="Add new hospital" actionListener="#{hospitalsMyBatis.createHospital}" action="hospitals?faces-redirect=true"/>
+    </h:form>
+    <h:link value="Back to home" outcome="/index"/>
+</h:body>
+</html>

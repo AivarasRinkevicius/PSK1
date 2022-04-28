@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+>
+<style>
+    table, th, td {
+        border:1px solid black;
+    }
+</style>
+<h:head/>
+<h:body>
+    <h1>Patients:</h1>
+    <table>
+        <tr>
+            <th>id</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Illnesses</th>
+        </tr>
+        <ui:repeat value="#{patientsForHospital.hospital.patients}" var="patient">
+            <tr>
+                <th>#{patient.id}</th>
+                <td>#{patient.name}</td>
+                <td>#{patient.surname}</td>
+
+                    <ui:repeat value="#{patient.patientIllnesses}" var="illness">
+                        <td>
+                        #{illness.type}
+                        </td>
+                    </ui:repeat>
+
+            </tr>
+        </ui:repeat>
+    </table>
+    <h:form>
+        <h:inputText value="#{patientsForHospital.patientToCreate.name}" required="true" />
+        <h:inputText value="#{patientsForHospital.patientToCreate.surname}" required="true" />
+        <h:selectManyCheckbox value="#{patientsForHospital.patientToCreate.patientIllnesses}" required="true">
+            <f:selectItems value="#{illnesses.allIllnesses}"
+                           var="illness"
+                           itemLabel="#{illness.type}"
+                           itemValue="#{illness}"/>
+        </h:selectManyCheckbox>
+
+        <h:commandButton value="Add new patient"
+                         actionListener="#{patientsForHospital.createPatient}"
+                         action="#{'patients?faces-redirect=true&amp;hospitalId='.concat(patientsForHospital.hospital.id)}">
+            <f:param name="hospitalId" value="#{patientsForHospital.hospital.id}" />
+        </h:commandButton>
+    </h:form>
+    <h:link value="Back to index" outcome="/index"/>
+</h:body>
+</html>
+
