@@ -6,7 +6,7 @@
     <!-- H2 Database -->
     <Resource id="PskDataSource" type="DataSource">
         JdbcDriver = org.h2.Driver
-        JdbcUrl = jdbc:h2:~/h2database/PskDATABASE;AUTO_SERVER=TRUE;
+        JdbcUrl = jdbc:h2:~/h2database/Psk;AUTO_SERVER=TRUE;
         UserName = sa
         Password = sa
         InitialSize = 1

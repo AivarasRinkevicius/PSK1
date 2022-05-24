@@ -5,5 +5,16 @@
         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                       http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
         bean-discovery-mode="annotated">
+    <alternatives>
+        <class>com.hospital.persistence.HeavyPatientsDAO</class>
+    </alternatives>
+
+    <decorators>
+        <class>com.hospital.decorators.RandomMessageGeneratorDecorator</class>
+    </decorators>
+
+    <interceptors>
+        <class>com.hospital.interceptors.MethodLoggerImplementation</class>
+    </interceptors>
 
 </beans>

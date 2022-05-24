@@ -3,12 +3,16 @@ package com.hospital.persistence;
 import com.hospital.entities.Patient;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Alternative;
+import javax.enterprise.inject.Default;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 
 @ApplicationScoped
-public class PatientsDAO {
+@Default
+public class PatientsDAO implements IPatient{
+
     @Inject
     private EntityManager entityManager;
 
@@ -22,5 +26,9 @@ public class PatientsDAO {
 
     public Patient findOne(Integer id){
         return entityManager.find(Patient.class, id);
+    }
+
+    public Patient update(Patient player){
+        return entityManager.merge(player);
     }
 }

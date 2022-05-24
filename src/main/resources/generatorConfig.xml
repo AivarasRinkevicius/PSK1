@@ -6,7 +6,7 @@
 <generatorConfiguration>
     <context id="Psk" targetRuntime="MyBatis3Simple">
         <jdbcConnection driverClass="org.h2.Driver"
-                        connectionURL="jdbc:h2:~/h2database/PskDATABASE;AUTO_SERVER=TRUE"
+                        connectionURL="jdbc:h2:~/h2database/Psk;AUTO_SERVER=TRUE"
                         userId="sa"
                         password="sa">
         </jdbcConnection>

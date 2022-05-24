@@ -1,10 +1,9 @@
 package com.hospital.usecases;
 
 import com.hospital.entities.Hospital;
-import com.hospital.entities.Illness;
 import com.hospital.entities.Patient;
 import com.hospital.persistence.HospitalsDAO;
-import com.hospital.persistence.PatientsDAO;
+import com.hospital.persistence.IPatient;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,14 +13,13 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
 
 @Model
 public class PatientsForHospital implements Serializable {
 
     @Inject
-    private PatientsDAO patientsDAO;
+    private IPatient patientsDAO;
 
     @Inject
     private HospitalsDAO hospitalsDAO;

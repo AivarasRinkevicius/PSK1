@@ -21,6 +21,10 @@ public class Patient implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Version
+    @Column(name = "OPT_LOCK_VERSION")
+    private int version;
+
     @Column(name = "NAME")
     private String name;
 
