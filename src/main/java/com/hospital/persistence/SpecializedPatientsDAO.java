@@ -15,7 +15,7 @@ public class SpecializedPatientsDAO extends PatientsDAO{
         List<Patient> patients = super.getAll();
         for( Patient patient: patients){
             System.out.println("name:"+patient.getName());
-            System.out.println("name:"+patient.getSurname());
+            System.out.println("surname:"+patient.getSurname());
         }
         return patients;
     }

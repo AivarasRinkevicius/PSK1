@@ -27,9 +27,6 @@ public class PatientsForHospital implements Serializable {
     @Getter @Setter
     private Hospital hospital;
 
-    //@Getter
-    //private List<Patient> allPatients;
-
     @Getter @Setter
     private Patient patientToCreate = new Patient();
 

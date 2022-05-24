@@ -27,6 +27,11 @@ public class RandomMessageGeneratorDecorator implements IGenerator{
                 .limit(targetStringLength)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         return generatedMessage;
     }

@@ -20,6 +20,11 @@ public class RandomMessageGenerator implements IGenerator{
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
 
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return generatedMessage;
     }
 }

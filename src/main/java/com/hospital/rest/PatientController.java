@@ -19,6 +19,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @ApplicationScoped
 @Path("/patients")
@@ -73,24 +76,58 @@ public class PatientController {
         return Response.ok(patientDto).build();
     }
 
+    private CompletableFuture<String> generateRandomNameTask = null;
+    @POST()
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public Response create(PatientUpdateDto patientUpdateDto) {
 
-      @POST()
-      @Consumes(MediaType.APPLICATION_JSON)
-      @Produces(MediaType.APPLICATION_JSON)
-      @Transactional
-      public Response create(PatientUpdateDto patientUpdateDto) {
-          Patient patient = new Patient();
-          patient.setName(patientUpdateDto.getName());
-          // patient.setSurname(patientUpdateDto.getSurname());
-          // decorator
-          patient.setSurname(generator.generateRandomMessage());
-          patient.setHospital(hospitalsDAO.findOne(patientUpdateDto.getHospitalId()));
-          patient.setPatientIllnesses(new ArrayList<>());
-          System.out.println(patient);
-          patientsDAO.persist(patient);
+        Patient patient = new Patient();
+        patient.setSurname(generator.generateRandomMessage());
+        generateRandomNameTask = CompletableFuture.supplyAsync(this::generateRandomName);
+        try{
+          patient.setName(generateRandomNameTask.get());
+        } catch (Exception e){
+          System.out.println(e.getMessage());
+        }
+        // patient.setName(patientUpdateDto.getName());
+        // patient.setSurname(patientUpdateDto.getSurname());
+        patient.setHospital(hospitalsDAO.findOne(patientUpdateDto.getHospitalId()));
+        patient.setPatientIllnesses(new ArrayList<>());
+        System.out.println(patient);
+        patientsDAO.persist(patient);
 
-          return Response.ok().build();
-      }
+      return Response.ok().build();
+    }
+
+    @Path("/task")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String asyncExample(){
+        if(generateRandomNameTask != null && !generateRandomNameTask.isDone()){
+            return "generate random name task is in progress";
+        }
+        return "generate random name task is completed";
+    }
+
+    public String generateRandomName() {
+        int leftLimit = 48;
+        int rightLimit = 122;
+        int targetStringLength = 5;
+        Random random = new Random();
+        String generatedMessage = random.ints(leftLimit, rightLimit + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return generatedMessage;
+    }
 
     @Path("/{id}")
     @PUT
