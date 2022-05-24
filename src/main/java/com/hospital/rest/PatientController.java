@@ -18,6 +18,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
@@ -112,21 +113,21 @@ public class PatientController {
     }
 
     public String generateRandomName() {
-        int leftLimit = 48;
-        int rightLimit = 122;
-        int targetStringLength = 5;
-        Random random = new Random();
-        String generatedMessage = random.ints(leftLimit, rightLimit + 1)
-                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
-                .limit(targetStringLength)
-                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-                .toString();
+
+        int max = 9;
+        int min = 0;
+        int diff = max - min;
+        Random rn = new Random();
+        int i = rn.nextInt(diff + 1);
+        i += min;
+
+        List<String> names = new ArrayList<>( Arrays.asList("Jonas", "Tomas", "Ona", "Ignas", "Veronika", "Migle", "Ieva", "Kamile", "Kornelija", "Ugne"));
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        return generatedMessage;
+        return names.get(i);
     }
 
     @Path("/{id}")
